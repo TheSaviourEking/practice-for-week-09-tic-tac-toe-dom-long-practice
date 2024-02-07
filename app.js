@@ -33,12 +33,15 @@ const server = http.createServer((req, res) => {
     }
     // Serving Static Assets
     const ext = path.extname(req.url);
+    console.log(path.extname(req.url))
     if (req.method === "GET" && ext) {
       try {
         const resBody = readFileSync('.' + "/public" + req.url);
         res.statusCode = 200;
         if (ext === ".jpg" || ext === ".jpeg") {
           res.setHeader("Content-Type", "image/jpeg");
+        } else if (ext === ".svg") {
+          res.setHeader("Content-Type", "image/svg+xml"); // had to add this so server could return svg properly
         } else if (ext === ".css") {
           res.setHeader("Content-Type", "text/css");
         } else if (ext === ".js") {
