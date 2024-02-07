@@ -1,1 +1,80 @@
 /* Your code here */
+/* * {
+    margin: 0;
+} */
+
+body {
+    display: grid;
+    place-items: center;
+    gap: 1rem;
+}
+
+:root {
+    --cell-width-height: 176px;
+    --primary-bg-color: #000;
+}
+
+.heading {
+    font-size: 3rem;
+    color: var(--primary-bg-color);
+}
+
+.game-container {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    /* grid-gap: 1rem; */
+}
+
+/* Cells */
+.cell {
+    width: var(--cell-width-height);
+    height: var(--cell-width-height);
+    border: 3px solid var(--primary-bg-color);
+}
+
+.cell[data-row='0'][data-col='0'] {
+    border-top: none;
+    border-left: none;
+}
+
+.cell[data-row='0'][data-col='1'] {
+    border-top: none;
+}
+
+.cell[data-row='0'][data-col='2'] {
+    border-top: none;
+    border-right: none;
+}
+
+.cell[data-row='1'][data-col='0'] {
+    border-left: none;
+}
+
+.cell[data-row='1'][data-col='2'] {
+    border-right: none;
+}
+
+.cell[data-row='2'][data-col='0'] {
+    border-bottom: none;
+    border-left: none;
+}
+
+.cell[data-row='2'][data-col='1'] {
+    border-bottom: none;
+}
+
+.cell[data-row='2'][data-col='2'] {
+    border-bottom: none;
+    border-right: none;
+}
+
+.controls {
+    display: flex;
+    width: calc(var(--cell-width-height) * 2.9);
+    justify-content: space-between;
+}
+
+button {
+    font-size: 2rem;
+    color: var(--primary-bg-color)
+}
