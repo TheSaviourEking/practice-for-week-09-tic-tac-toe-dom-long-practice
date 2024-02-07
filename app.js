@@ -33,7 +33,6 @@ const server = http.createServer((req, res) => {
     }
     // Serving Static Assets
     const ext = path.extname(req.url);
-    console.log(path.extname(req.url))
     if (req.method === "GET" && ext) {
       try {
         const resBody = readFileSync('.' + "/public" + req.url);
