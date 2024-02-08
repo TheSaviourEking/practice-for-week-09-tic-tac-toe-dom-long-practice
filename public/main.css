@@ -19,14 +19,20 @@ body {
     color: var(--primary-bg-color);
 }
 
-.game-container {
+.game-container,
+.cell {
     display: grid;
+}
+
+.game-container {
     grid-template-columns: repeat(3, auto);
     /* grid-gap: 1rem; */
 }
 
 /* Cells */
 .cell {
+    place-items: center;
+    font-size: 2rem;
     width: var(--cell-width-height);
     height: var(--cell-width-height);
     border: 3px solid var(--primary-bg-color);
@@ -77,4 +83,11 @@ body {
 button {
     font-size: 2rem;
     color: var(--primary-bg-color)
+}
+
+/* SVG */
+svg,
+img {
+    width: var(--cell-width-height);
+    height: var(--cell-width-height);
 }
