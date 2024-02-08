@@ -38,42 +38,43 @@ body {
     border: 3px solid var(--primary-bg-color);
 }
 
-.cell[data-row='0'][data-col='0'] {
+#square-0 {
     border-top: none;
     border-left: none;
 }
 
-.cell[data-row='0'][data-col='1'] {
+#square-1 {
     border-top: none;
 }
 
-.cell[data-row='0'][data-col='2'] {
+#square-2 {
     border-top: none;
     border-right: none;
 }
 
-.cell[data-row='1'][data-col='0'] {
+#square-3 {
     border-left: none;
 }
 
-.cell[data-row='1'][data-col='2'] {
+#square-5 {
     border-right: none;
 }
 
-.cell[data-row='2'][data-col='0'] {
+#square-6 {
     border-bottom: none;
     border-left: none;
 }
 
-.cell[data-row='2'][data-col='1'] {
+#square-7 {
     border-bottom: none;
 }
 
-.cell[data-row='2'][data-col='2'] {
+#square-8 {
     border-bottom: none;
     border-right: none;
 }
 
+/* Game Controls */
 .controls {
     display: flex;
     width: calc(var(--cell-width-height) * 2.9);
@@ -88,6 +89,9 @@ button {
 /* SVG */
 svg,
 img {
+    /* width: calc(var(--cell-width-height) / 2);
+    height: calc(var(--cell-width-height) / 2); */
+
     width: var(--cell-width-height);
     height: var(--cell-width-height);
 }

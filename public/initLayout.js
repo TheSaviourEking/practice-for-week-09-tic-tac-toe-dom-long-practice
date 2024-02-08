@@ -7,19 +7,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const gameContainer = document.createElement('div');
     gameContainer.setAttribute('class', 'game-container');
-    for (let row = 0; row < BOARDLENGTH; row++) {
-        for (let col = 0; col < BOARDLENGTH; col++) {
-            const div = document.createElement('div');
-            div.setAttribute('class', 'cell');
-            div.setAttribute('data-row', row);
-            div.setAttribute('data-col', col);
-            gameContainer.appendChild(div);
-        }
-    }
 
     for (let i = 0; i < BOARDLENGTH * BOARDLENGTH; i++) {
-        const div = gameContainer.childNodes[i];
+        // const div = gameContainer.childNodes[i];
+        const div = document.createElement('div');
+        div.setAttribute('class', 'cell');
         div.setAttribute('id', `square-${i}`);
+
+        gameContainer.appendChild(div)
     }
 
     const controls = document.createElement('div');
