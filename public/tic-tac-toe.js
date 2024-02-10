@@ -34,6 +34,12 @@ function init() {
             child.addEventListener('click', gameContainerClickHandler);
         })
     }
+
+    const newGameBtn = document.getElementById('newGameBtn');
+    newGameBtn.disabled = true;
+
+    const giveUpBtn = document.getElementById('giveUpBtn');
+    giveUpBtn.disabled = false;
 }
 
 const gameState = JSON.parse(localStorage.getItem('tic-tac-toe'));
@@ -82,13 +88,15 @@ function gameContainerClickHandler(event) {
             const h1 = document.getElementsByClassName('heading')[0];
             h1.innerText = `Winner: `;
             if (win === 'o' || win === 'x') {
-                h1.innerText += win.toUpperCase();
+                h1.innerText += " " + win.toUpperCase();
                 won = true; // game status store;
             } else if (win === 'T') {
-                h1.innerText += 'None';
+                h1.innerText += ' ' + 'None';
             }
+            giveUpBtn.disabled = true;
             newGameBtn.disabled = false;
             return;
+
         } else {
             newGameBtn.disabled = true;
         }
@@ -170,7 +178,7 @@ function giveUpBtnListener(event) {
         const gameBoard = document.getElementsByClassName('game-container')[0];
         const h1 = document.getElementsByClassName('heading')[0];
         if (!isEmptyGrid(gameBoard) && !isFullGrid(gameBoard)) {
-            h1.innerText = `Won by "${switchPlayers().toUpperCase()}" player`;
+            h1.innerText += `Winner: ${players[currentPlayerIndex].toUpperCase()}`;
         }
     }
     event.target.disabled = true;
