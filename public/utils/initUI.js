@@ -2,19 +2,20 @@ window.addEventListener('DOMContentLoaded', () => {
     const BOARDLENGTH = 3;
     const h1 = document.createElement('h1');
     h1.setAttribute('class', 'heading');
-    // h1.innerText = 'Winner:';
-    // const heading = `<h1 class='heading'>Winner:</h1>`;
 
     const gameContainer = document.createElement('div');
     gameContainer.setAttribute('class', 'game-container');
 
-    for (let i = 0; i < BOARDLENGTH * BOARDLENGTH; i++) {
-        // const div = gameContainer.childNodes[i];
-        const div = document.createElement('div');
-        div.setAttribute('class', 'cell');
-        div.setAttribute('id', `square-${i}`);
+    for (let row = 0; row < BOARDLENGTH; row++) {
+        for (let col = 0; col < BOARDLENGTH; col++) {
+            const div = document.createElement('div');
+            div.setAttribute('data-row', row);
+            div.setAttribute('data-col', col);
+            div.setAttribute('class', 'cell');
+            div.setAttribute('id', `square-${row * 3 + col}`);
 
-        gameContainer.appendChild(div)
+            gameContainer.appendChild(div);
+        }
     }
 
     const controls = document.createElement('div');

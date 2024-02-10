@@ -1,7 +1,8 @@
 /* Your code here */
-/* * {
-    margin: 0;
-} */
+* {
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
 
 body {
     display: grid;
@@ -89,9 +90,6 @@ button {
 /* SVG */
 svg,
 img {
-    /* width: calc(var(--cell-width-height) / 2);
-    height: calc(var(--cell-width-height) / 2); */
-
     width: var(--cell-width-height);
     height: var(--cell-width-height);
 }
