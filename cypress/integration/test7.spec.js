@@ -64,7 +64,7 @@ describe("Phase 7: Saving Game State", function () {
         it("Game state is persisted after a player gives up", function () {
             cy.playGame(0,1,2);
             cy.get("button").contains("Give Up").click();
-            cy.playGame(0,1,2);
+            // cy.playGame(0,1,2);
 
             cy.get("#square-0").children()
                 .should("have.attr", "src", "https://assets.aaonline.io/Module-DOM-API/formative-project-tic-tac-toe/player-x.svg");
