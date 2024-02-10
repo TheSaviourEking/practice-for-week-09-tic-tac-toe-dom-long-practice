@@ -33,6 +33,9 @@ function gameContainerClickHandler(event) {
     const newGameBtn = document.getElementById('newGameBtn');
     newGameBtn.addEventListener('click', newGameBtnListener);
 
+    const giveUpBtn = document.getElementById('giveUpBtn');
+    giveUpBtn.addEventListener('click', giveUpBtnListener);
+
     const xSymbol = document.createElement('img');
     xSymbol.src = 'assets/player-x.svg';
     xSymbol.className = 'x';
@@ -111,15 +114,35 @@ function newGameBtnListener(event) {
             }
         })
     }
-    // function removeImages() {
 
-    // }
-    // console.log(gameBoard)
     clearGameStatus();
     clearHeader();
     clearBoard();
     switchTurn();
     event.target.disabled = true;
+
+    const giveUpBtn = document.getElementById('giveUpBtn');
+    giveUpBtn.disabled = false;
+
+}
+
+function giveUpBtnListener(event) {
+    function setWon() {
+        won = true;
+    }
+
+    function resetStatus() {
+        const gameBoard = document.getElementsByClassName('game-container')[0];
+        const h1 = document.getElementsByClassName('heading')[0];
+        if (!isEmptyGrid(gameBoard)) {
+            h1.innerText = `Won by "${turn.toUpperCase()}" player`;
+        }
+    }
+    event.target.disabled = true;
+    setWon();
+    resetStatus();
+    const newGameBtn = document.getElementById('newGameBtn');
+    newGameBtn.disabled = false;
 }
 
 window.onload = init;

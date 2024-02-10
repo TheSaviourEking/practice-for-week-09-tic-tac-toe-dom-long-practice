@@ -70,7 +70,7 @@ export function checkDiagonalWin(gameBoard) {
 export function isEmptyGrid(gameBoard) {
     for (let i = 0; i < gameBoard.childNodes.length; i++) {
         let child = gameBoard.childNodes[i];
-        if (child.childNodes[0].className === 'x' || child.childNodes[0].className === 'o') {
+        if (child && (child.childNodes[0]?.className === 'x' || child.childNodes[0]?.className === 'o')) {
             return false;
         }
     }
@@ -79,7 +79,6 @@ export function isEmptyGrid(gameBoard) {
 
 export function isFullGrid(gameBoard) {
 
-    // debugger;
     for (let i = 0; i < gameBoard.childNodes.length; i++) {
         let child = gameBoard.childNodes[i].childNodes[0];
         if (!child?.className) {
