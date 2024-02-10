@@ -166,6 +166,7 @@ function newGameBtnListener(event) {
     switchPlayers();
     event.target.disabled = true;
 
+    localStorage.removeItem('winner');
     const giveUpBtn = document.getElementById('giveUpBtn');
     giveUpBtn.disabled = false;
 
