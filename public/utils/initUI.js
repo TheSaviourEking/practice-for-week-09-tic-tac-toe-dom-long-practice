@@ -5,19 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const gameContainer = document.createElement('div');
     gameContainer.setAttribute('class', 'game-container');
-
-    // for (let row = 0; row < BOARDLENGTH; row++) {
-    //     for (let col = 0; col < BOARDLENGTH; col++) {
-    //         const div = document.createElement('div');
-    //         // div.setAttribute('data-row', row);
-    //         // div.setAttribute('data-col', col);
-    //         div.setAttribute('class', 'cell');
-    //         div.setAttribute('id', `square-${row * 3 + col}`);
-
-    //         gameContainer.appendChild(div);
-    //     }
-    // }
-
+    
     for (let id = 0; id < BOARDLENGTH; id++) {
         const div = document.createElement('div');
         div.setAttribute('class', 'cell');
