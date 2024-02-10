@@ -14,10 +14,13 @@ function init() {
 
     if (localStorage.getItem('tic-tac-toe')) {
         const gameState = JSON.parse(localStorage.getItem('tic-tac-toe'));
+        const winner = JSON.parse(localStorage.getItem('winner'));
+
+        const h1 = document.getElementsByClassName('heading')[0];
+        h1.innerText = winner;
 
         for (let i = 0; i < gameState[0].length; i++) {
             const { index, className } = gameState[0][i];
-            console.log(index, className);
             gameContainer.childNodes[index].appendChild(createSymbols(className));
         }
         const emptySlots = emptySlotsInBoard(gameContainer);
@@ -26,7 +29,6 @@ function init() {
             cell.addEventListener('click', gameContainerClickHandler)
         }
 
-        console.log(gameState)
     } else {
         /* cell eventListeners */
         // const gameContainer = document.getElementsByClassName('game-container')[0];
@@ -62,10 +64,8 @@ function gameContainerClickHandler(event) {
     const giveUpBtn = document.getElementById('giveUpBtn');
     giveUpBtn.addEventListener('click', giveUpBtnListener);
 
-    //
-
-    const gameState = JSON.parse(localStorage.getItem('tic-tac-toe'));
     const turn = switchPlayers();
+
     if (turn) {
         try {
             if (turn === 'x') target.appendChild(createSymbols('x'));
@@ -74,10 +74,21 @@ function gameContainerClickHandler(event) {
             console.error(error)
         }
 
+        const gameContainer = document.getElementsByClassName('game-container')[0];
+        const gameBoardClassArr = [[]];
+        for (let i = 0; i < gameContainer.childNodes.length; i++) {
+            const child = gameContainer.childNodes[i];
+            if (child && child.childNodes[0]?.className) {
+                gameBoardClassArr[0].push({ index: i, className: child.childNodes[0].className });
+            }
+        }
+        gameBoardClassArr.push(currentPlayerIndex);
+        localStorage.setItem('tic-tac-toe', JSON.stringify(gameBoardClassArr));
         target.removeEventListener('click', gameContainerClickHandler);
 
         const win = checkWin();
         if (win) {
+
             const gameBoard = document.getElementsByClassName('game-container')[0];
             const emptySlots = emptySlotsInBoard(gameBoard);
             for (let cellId = 0; cellId < emptySlots.length; cellId++) {
@@ -90,9 +101,11 @@ function gameContainerClickHandler(event) {
             if (win === 'o' || win === 'x') {
                 h1.innerText += " " + win.toUpperCase();
                 won = true; // game status store;
+
             } else if (win === 'T') {
                 h1.innerText += ' ' + 'None';
             }
+            localStorage.setItem('winner', JSON.stringify(h1.innerText));
             giveUpBtn.disabled = true;
             newGameBtn.disabled = false;
             return;
@@ -101,17 +114,6 @@ function gameContainerClickHandler(event) {
             newGameBtn.disabled = true;
         }
     }
-    // local storage
-    const gameContainer = document.getElementsByClassName('game-container')[0];
-    const gameBoardClassArr = [[]];
-    for (let i = 0; i < gameContainer.childNodes.length; i++) {
-        const child = gameContainer.childNodes[i];
-        if (child && child.childNodes[0]?.className) {
-            gameBoardClassArr[0].push({ index: i, className: child.childNodes[0].className });
-        }
-    }
-    gameBoardClassArr.push(currentPlayerIndex);
-    localStorage.setItem('tic-tac-toe', JSON.stringify(gameBoardClassArr));
 }
 
 function createSymbols(className) {
@@ -181,6 +183,7 @@ function giveUpBtnListener(event) {
             h1.innerText += `Winner: ${players[currentPlayerIndex].toUpperCase()}`;
         }
     }
+
     event.target.disabled = true;
     setWon();
     resetStatus();
