@@ -87,6 +87,11 @@ button {
     color: var(--primary-bg-color)
 }
 
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* SVG */
 svg,
 img {

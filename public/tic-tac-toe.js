@@ -15,7 +15,7 @@ function init() {
 
     /* cell eventListeners */
     gameContainer.childNodes.forEach(child => {
-        child.addEventListener('click', gameContainerClickHandler)
+        child.addEventListener('click', gameContainerClickHandler);
     })
 }
 
@@ -24,9 +24,14 @@ function switchTurn() {
     turn === 'x' ? turn = 'o' : turn = 'x';
     return turn;
 }
+let won = false;
 
 function gameContainerClickHandler(event) {
     const target = event.currentTarget;
+
+    /* Buttons */
+    const newGameBtn = document.getElementById('newGameBtn');
+    newGameBtn.addEventListener('click', newGameBtnListener);
 
     const xSymbol = document.createElement('img');
     xSymbol.src = 'assets/player-x.svg';
@@ -37,7 +42,6 @@ function gameContainerClickHandler(event) {
     oSymbol.className = 'o';
 
     const turn = switchTurn();
-
     if (turn) {
         try {
             if (turn === 'x') target.appendChild(xSymbol);
@@ -61,12 +65,14 @@ function gameContainerClickHandler(event) {
             h1.innerText = `Winner: `;
             if (win === 'o' || win === 'x') {
                 h1.innerText += win.toUpperCase();
+                won = true; // game status store;
             } else if (win === 'T') {
                 h1.innerText += 'None';
-            } else {
-                h1.innerText = 'Game Over';
             }
+            newGameBtn.disabled = false;
             return;
+        } else {
+            newGameBtn.disabled = true;
         }
     }
 }
@@ -80,6 +86,40 @@ function checkWin() {
     } else {
         return checkHorizontalWin(gameBoard) || checkVerticalWin(gameBoard) || checkDiagonalWin(gameBoard)
     }
+}
+
+/* Button Events */
+function newGameBtnListener(event) {
+    const gameBoard = document.getElementsByClassName('game-container')[0];
+    function clearGameStatus() {
+        if (won) {
+            won = false;
+        }
+    }
+
+    function clearHeader() {
+        const h1 = document.getElementsByClassName('heading')[0];
+        h1.innerText = '';
+    }
+
+    function clearBoard() {
+        gameBoard.childNodes.forEach(cell => {
+            cell.addEventListener('click', gameContainerClickHandler); // readding the click event handler while clearing board to avoid double loops
+            const cellChild = cell.childNodes[0];
+            if (cell && cellChild) {
+                cell.removeChild(cellChild)
+            }
+        })
+    }
+    // function removeImages() {
+
+    // }
+    // console.log(gameBoard)
+    clearGameStatus();
+    clearHeader();
+    clearBoard();
+    switchTurn();
+    event.target.disabled = true;
 }
 
 window.onload = init;

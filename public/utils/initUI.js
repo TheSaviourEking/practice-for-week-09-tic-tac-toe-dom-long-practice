@@ -21,7 +21,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const controls = document.createElement('div');
     controls.setAttribute('class', 'controls');
     const newGameControl = document.createElement('button');
+    newGameControl.setAttribute('id', 'newGameBtn');
     const giveUpControl = document.createElement('button');
+    giveUpControl.setAttribute('id', 'giveUpBtn');
 
     newGameControl.innerText = 'New Game';
     giveUpControl.innerText = 'Give Up';
