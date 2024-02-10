@@ -11,18 +11,38 @@ import {
 // Your code here
 function init() {
     const gameContainer = document.getElementsByClassName('game-container')[0];
-    // gameContainer.addEventListener('click', gameContainerClickHandler);
 
-    /* cell eventListeners */
-    gameContainer.childNodes.forEach(child => {
-        child.addEventListener('click', gameContainerClickHandler);
-    })
+    if (localStorage.getItem('tic-tac-toe')) {
+        const gameState = JSON.parse(localStorage.getItem('tic-tac-toe'));
+
+        for (let i = 0; i < gameState[0].length; i++) {
+            const { index, className } = gameState[0][i];
+            console.log(index, className);
+            gameContainer.childNodes[index].appendChild(createSymbols(className));
+        }
+        const emptySlots = emptySlotsInBoard(gameContainer);
+        for (let cellId = 0; cellId < emptySlots.length; cellId++) {
+            const cell = document.getElementById(`square-${emptySlots[cellId].id}`);
+            cell.addEventListener('click', gameContainerClickHandler)
+        }
+
+        console.log(gameState)
+    } else {
+        /* cell eventListeners */
+        // const gameContainer = document.getElementsByClassName('game-container')[0];
+        gameContainer.childNodes.forEach(child => {
+            child.addEventListener('click', gameContainerClickHandler);
+        })
+    }
 }
 
-let turn = 'o';
-function switchTurn() {
-    turn === 'x' ? turn = 'o' : turn = 'x';
-    return turn;
+const gameState = JSON.parse(localStorage.getItem('tic-tac-toe'));
+
+const players = ['x', 'o'];
+let currentPlayerIndex = gameState ? gameState[1] : 1;
+function switchPlayers() {
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+    return players[currentPlayerIndex];
 }
 let won = false;
 
@@ -36,19 +56,14 @@ function gameContainerClickHandler(event) {
     const giveUpBtn = document.getElementById('giveUpBtn');
     giveUpBtn.addEventListener('click', giveUpBtnListener);
 
-    const xSymbol = document.createElement('img');
-    xSymbol.src = 'assets/player-x.svg';
-    xSymbol.className = 'x';
+    //
 
-    const oSymbol = document.createElement('img');
-    oSymbol.src = 'assets/player-o.svg';
-    oSymbol.className = 'o';
-
-    const turn = switchTurn();
+    const gameState = JSON.parse(localStorage.getItem('tic-tac-toe'));
+    const turn = switchPlayers();
     if (turn) {
         try {
-            if (turn === 'x') target.appendChild(xSymbol);
-            if (turn === 'o') target.appendChild(oSymbol);
+            if (turn === 'x') target.appendChild(createSymbols('x'));
+            if (turn === 'o') target.appendChild(createSymbols('o'));
         } catch (error) {
             console.error(error)
         }
@@ -78,6 +93,24 @@ function gameContainerClickHandler(event) {
             newGameBtn.disabled = true;
         }
     }
+    // local storage
+    const gameContainer = document.getElementsByClassName('game-container')[0];
+    const gameBoardClassArr = [[]];
+    for (let i = 0; i < gameContainer.childNodes.length; i++) {
+        const child = gameContainer.childNodes[i];
+        if (child && child.childNodes[0]?.className) {
+            gameBoardClassArr[0].push({ index: i, className: child.childNodes[0].className });
+        }
+    }
+    gameBoardClassArr.push(currentPlayerIndex);
+    localStorage.setItem('tic-tac-toe', JSON.stringify(gameBoardClassArr));
+}
+
+function createSymbols(className) {
+    const symbol = document.createElement('img');
+    symbol.src = `assets/player-${className}.svg`;
+    symbol.className = className;
+    return symbol;
 }
 
 function checkWin() {
@@ -93,6 +126,8 @@ function checkWin() {
 
 /* Button Events */
 function newGameBtnListener(event) {
+    localStorage.removeItem('tic-tac-toe');
+
     const gameBoard = document.getElementsByClassName('game-container')[0];
     function clearGameStatus() {
         if (won) {
@@ -118,7 +153,7 @@ function newGameBtnListener(event) {
     clearGameStatus();
     clearHeader();
     clearBoard();
-    switchTurn();
+    switchPlayers();
     event.target.disabled = true;
 
     const giveUpBtn = document.getElementById('giveUpBtn');
@@ -134,8 +169,8 @@ function giveUpBtnListener(event) {
     function resetStatus() {
         const gameBoard = document.getElementsByClassName('game-container')[0];
         const h1 = document.getElementsByClassName('heading')[0];
-        if (!isEmptyGrid(gameBoard)) {
-            h1.innerText = `Won by "${turn.toUpperCase()}" player`;
+        if (!isEmptyGrid(gameBoard) && !isFullGrid(gameBoard)) {
+            h1.innerText = `Won by "${switchPlayers().toUpperCase()}" player`;
         }
     }
     event.target.disabled = true;
