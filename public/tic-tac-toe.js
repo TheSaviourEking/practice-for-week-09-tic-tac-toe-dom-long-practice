@@ -108,7 +108,7 @@ function gameContainerClickHandler(event) {
 
 function createSymbols(className) {
     const symbol = document.createElement('img');
-    symbol.src = `assets/player-${className}.svg`;
+    symbol.src = `https://assets.aaonline.io/Module-DOM-API/formative-project-tic-tac-toe/player-${className}.svg`;
     symbol.className = className;
     return symbol;
 }
